@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CountdownButton</string>
+    <string name="user_captcha_send_again">重新发送</string>
+</resources>

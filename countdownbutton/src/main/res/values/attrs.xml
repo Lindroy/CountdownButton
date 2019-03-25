@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义倒计时按钮-->
+    <declare-styleable name="CountdownButton">
+       <!--倒计时文字，要传入stringformat格式，如%s秒-->
+        <attr name="countingStr" format="string"/>
+        <attr name="millisInFuture" format="integer"/>
+        <attr name="countDownInterval" format="integer"/>
+    </declare-styleable>
+
+    <!--自定义允许输入最大字符数的输入框-->
+    <declare-styleable name="CustomEditText">
+        <attr name="toastText" format="string"/>
+        <attr name="maxInputLength" format="integer"/>
+    </declare-styleable>
+</resources>
