@@ -31,5 +31,34 @@ public class JavaActivity extends AppCompatActivity {
                 return null;
             }
         });
+
+        btnSubmit.setOnCountdownListener(new CountdownButton.OnCountdownListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+            @Override
+            public void onTick(int interval) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        btnSubmit.setOnCountdownListener(new CountdownButton.SimpleOnCountdownListener() {
+            @Override
+            public void onFinished() {
+                super.onFinished();
+            }
+        });
     }
 }

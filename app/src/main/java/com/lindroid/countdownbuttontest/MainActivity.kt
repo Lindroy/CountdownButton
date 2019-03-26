@@ -3,7 +3,7 @@ package com.lindroid.countdownbuttontest
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
+import com.lindroid.countdownbutton.CountdownButton
 import kotlinx.android.synthetic.main.activity_main.*
 
 private val TAG = "CountDownTag"
@@ -12,24 +12,46 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btnSubmit.apply {
-            setOnClickListener {
-                btnSubmit.start()
-            }
-            setOnStartListener {
+        /* btnSubmit.apply {
+             setOnClickListener {
+                 btnSubmit.start()
+             }
+             setOnStartListener {
+                 Log.d(TAG, "倒计时开始")
+             }
+             setOnStopListener {
+                 Log.d(TAG, "倒计时取消")
+             }
+             setOnTickListener {
+                 Log.d(TAG, "倒计时：$it")
+             }
+             setOnFinishedListener {
+                 Log.d(TAG, "倒计时结束")
+                 Toast.makeText(this@MainActivity, "倒计时结束", Toast.LENGTH_SHORT).show()
+             }
+         }*/
+        btnSubmit.setOnClickListener { btnSubmit.start() }
+        btnSubmit.setOnCountdownListener(object : CountdownButton.SimpleOnCountdownListener() {
+            override fun onStart() {
+                super.onStart()
                 Log.d(TAG, "倒计时开始")
             }
-            setOnStopListener {
+
+            override fun onStop() {
+                super.onStop()
                 Log.d(TAG, "倒计时取消")
             }
-            setOnTickListener {
-                Log.d(TAG, "倒计时：$it")
+
+            override fun onTick(interval: Int) {
+                super.onTick(interval)
+                Log.d(TAG, "倒计时：$interval")
             }
-            setOnFinishedListener {
+
+            override fun onFinished() {
+                super.onFinished()
                 Log.d(TAG, "倒计时结束")
-                Toast.makeText(this@MainActivity, "倒计时结束", Toast.LENGTH_SHORT).show()
             }
-        }
+        })
         btnStart.setOnClickListener { btnSubmit.start() }
         btnStop.setOnClickListener { btnSubmit.stop() }
     }

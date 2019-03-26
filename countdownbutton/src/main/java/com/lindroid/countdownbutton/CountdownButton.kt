@@ -37,6 +37,8 @@ class CountdownButton : AppCompatButton {
 
     private var stopListener: (() -> Unit)? = null
 
+    private var countdownListener: OnCountdownListener? = null
+
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, android.R.attr.buttonStyle)
     @SuppressLint("Recycle")
@@ -78,7 +80,6 @@ class CountdownButton : AppCompatButton {
         when (isStarted) {
             //倒计时开启
             true -> {
-                startListener?.invoke()
                 isEnabled = false
                 buttonText = text.toString()
                 if (countdownTimer == null) {
@@ -94,7 +95,7 @@ class CountdownButton : AppCompatButton {
                             //转换成double类型后再除于1000，是为了得到小数，避免出现漏秒的情况
                             val time = (Math.round(millisUntilFinished.toDouble() / 1000)).toInt()
                             text = String.format(tickText, time)
-                            tickListener?.invoke(time)
+                            onTick(time)
                         }
 
                         /**
@@ -105,19 +106,20 @@ class CountdownButton : AppCompatButton {
                             isTicking = false
                             isEnabled = true
                             text = finishText
-                            finishedListener?.invoke()
+                            onFinished()
                         }
                     }.start()
                 } else {
                     countdownTimer!!.start()
                 }
+                onStart()
             }
             //倒计时结束
             false -> {
-                stopListener?.invoke()
                 isEnabled = true
                 text = buttonText
                 countdownTimer?.cancel()
+                onStop()
             }
         }
         isTicking = isStarted
@@ -126,8 +128,30 @@ class CountdownButton : AppCompatButton {
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         stop()
+        startListener = null
+        stopListener = null
         finishedListener = null
         tickListener = null
+    }
+
+    private fun onStart() {
+        startListener?.invoke()
+        countdownListener?.onStart()
+    }
+
+    private fun onStop() {
+        stopListener?.invoke()
+        countdownListener?.onStop()
+    }
+
+    private fun onTick(interval: Int) {
+        tickListener?.invoke(interval)
+        countdownListener?.onTick(interval)
+    }
+
+    private fun onFinished() {
+        finishedListener?.invoke()
+        countdownListener?.onFinished()
     }
 
     /**
@@ -157,6 +181,32 @@ class CountdownButton : AppCompatButton {
      */
     fun setOnStopListener(listener: () -> Unit) {
         stopListener = listener
+    }
+
+    fun setOnCountdownListener(listener: OnCountdownListener) {
+        countdownListener = listener
+    }
+
+    interface OnCountdownListener {
+        fun onStart()
+        fun onStop()
+        fun onTick(interval: Int)
+        fun onFinished()
+    }
+
+    open class SimpleOnCountdownListener : OnCountdownListener {
+        override fun onStart() {
+        }
+
+        override fun onStop() {
+        }
+
+        override fun onTick(interval: Int) {
+        }
+
+        override fun onFinished() {
+        }
+
     }
 
 }
