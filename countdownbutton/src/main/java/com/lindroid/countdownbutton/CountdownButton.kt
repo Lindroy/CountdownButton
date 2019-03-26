@@ -14,7 +14,7 @@ import android.util.AttributeSet
  */
 class CountdownButton : AppCompatButton {
     /**倒计时的总时间**/
-    var millisInFuture = 10 * 1000
+    var millisInFuture = 60 * 1000
     /**倒计时的时间间隔**/
     var countDownInterval = 1 * 1000
     /**倒计时是否在进行**/
@@ -25,7 +25,7 @@ class CountdownButton : AppCompatButton {
     /**正常按钮文字**/
     private var buttonText = ""
     /**倒计时按钮文字**/
-    var countingText = "%ss"
+    var tickText = ""
     /**倒计时结束时的按钮文字**/
     var finishText = ""
 
@@ -45,13 +45,17 @@ class CountdownButton : AppCompatButton {
                 0
         )
         typedArray?.let {
-            countingText = it.getString(R.styleable.CountdownButton_countingText) ?: "%ss"
+            tickText = it.getString(R.styleable.CountdownButton_tickText)
+                    ?: context.getString(R.string.countdown_button_tick_text)
             finishText = it.getString(R.styleable.CountdownButton_finishedText)
-                    ?: context.getString(R.string.user_captcha_send_again)
+                    ?: context.getString(R.string.countdown_button_finished_text)
             millisInFuture = it.getInt(R.styleable.CountdownButton_millisInFuture, millisInFuture)
             countDownInterval = it.getInt(R.styleable.CountdownButton_countDownInterval, countDownInterval)
             it.recycle()
         }
+        //取消全部英文字母大写
+        isAllCaps = false
+
     }
 
     fun start() {
@@ -85,7 +89,7 @@ class CountdownButton : AppCompatButton {
                     override fun onTick(millisUntilFinished: Long) {
                         //转换成double类型后再除于1000，是为了得到小数，避免出现漏秒的情况
                         val time = (Math.round(millisUntilFinished.toDouble() / 1000)).toInt()
-                        text = String.format(countingText, time)
+                        text = String.format(tickText, time)
                         tickListener?.invoke(time)
                     }
 

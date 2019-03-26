@@ -2,16 +2,14 @@
 <resources>
     <!--自定义倒计时按钮-->
     <declare-styleable name="CountdownButton">
-       <!--倒计时文字，要传入stringformat格式，如%s秒-->
-        <attr name="countingText" format="string"/>
+        <!--倒计时进行中文字，要传入stringformat格式，如%s秒-->
+        <attr name="tickText" format="string" />
         <attr name="finishedText" format="string"/>
+        <!--倒计时总时间，默认为60s-->
         <attr name="millisInFuture" format="integer"/>
+        <!--倒计时的间隔，默认为1s-->
         <attr name="countDownInterval" format="integer"/>
     </declare-styleable>
 
-    <!--自定义允许输入最大字符数的输入框-->
-    <declare-styleable name="CustomEditText">
-        <attr name="toastText" format="string"/>
-        <attr name="maxInputLength" format="integer"/>
-    </declare-styleable>
+
 </resources>
