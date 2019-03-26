@@ -3,7 +3,8 @@
     <!--自定义倒计时按钮-->
     <declare-styleable name="CountdownButton">
        <!--倒计时文字，要传入stringformat格式，如%s秒-->
-        <attr name="countingStr" format="string"/>
+        <attr name="countingText" format="string"/>
+        <attr name="finishedText" format="string"/>
         <attr name="millisInFuture" format="integer"/>
         <attr name="countDownInterval" format="integer"/>
     </declare-styleable>

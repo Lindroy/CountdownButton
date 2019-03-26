@@ -3,10 +3,11 @@ package com.lindroid.countdownbutton
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.CountDownTimer
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
+import android.view.ViewGroup
 
 /**
  * @author Lin
@@ -25,7 +26,7 @@ class CountdownButton : AppCompatButton {
     private var isStarted = false
     private var countdownTimer: CountDownTimer? = null
     /**正常按钮文字**/
-    private var buttomText = ""
+    private var buttonText = ""
     /**倒计时按钮文字**/
     var countingText = "%ss"
     /**倒计时结束时的按钮文字**/
@@ -33,7 +34,8 @@ class CountdownButton : AppCompatButton {
 
     private var finishedListener: (() -> Unit)? = null
 
-    private val TAG = "CountDownTag"
+    private var tickListener: ((interval: Int) -> Unit)? = null
+
 
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, android.R.style.Widget_Button)
@@ -46,8 +48,8 @@ class CountdownButton : AppCompatButton {
             android.R.style.Widget_Button
         )
         typedArray?.let {
-            countingText = it.getString(R.styleable.CountdownButton_countingStr) ?: "%ss"
-            finishText = it.getString(R.styleable.CountdownButton_countingStr)
+            countingText = it.getString(R.styleable.CountdownButton_countingText) ?: "%ss"
+            finishText = it.getString(R.styleable.CountdownButton_finishedText)
                 ?: context.getString(R.string.user_captcha_send_again)
             millisInFuture = it.getInt(R.styleable.CountdownButton_millisInFuture, millisInFuture)
             countDownInterval = it.getInt(R.styleable.CountdownButton_countDownInterval, countDownInterval)
@@ -57,17 +59,16 @@ class CountdownButton : AppCompatButton {
         gravity = Gravity.CENTER
         isClickable = true
         isFocusable = true
-//        layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        context?.let { background = ContextCompat.getDrawable(it, android.R.drawable.btn_default) }
+        layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
     fun start() {
-        Log.d(TAG, "倒计时开始")
         isStarted = true
         updateCounting()
     }
 
     fun stop() {
-        Log.d(TAG, "倒计时结束")
         isStarted = false
         updateCounting()
     }
@@ -81,7 +82,7 @@ class CountdownButton : AppCompatButton {
             true -> {
                 countdownTimer?.cancel()
                 isEnabled = false
-                buttomText = text.toString()
+                buttonText = text.toString()
                 countdownTimer = object : CountDownTimer(
                     (millisInFuture - 1000).toLong(), //millisInFuture-1000是为了跳过0秒
                     countDownInterval.toLong()
@@ -94,6 +95,7 @@ class CountdownButton : AppCompatButton {
                         //转换成double类型后再除于1000，是为了得到小数，避免出现漏秒的情况
                         val time = (Math.round(millisUntilFinished.toDouble() / 1000)).toInt()
                         text = String.format(countingText, time)
+                        tickListener?.invoke(time)
                     }
 
                     /**
@@ -117,8 +119,19 @@ class CountdownButton : AppCompatButton {
         finishedListener = null
     }
 
-    fun setFinishListener(listener: (() -> Unit)) {
+    /**
+     * 倒计时完成的监听
+     */
+    fun setFinishListener(listener: () -> Unit) {
         finishedListener = listener
+    }
+
+    /**
+     * 倒计时进行中的监听
+     * @param listener:参数interval为经过优化处理的整数
+     */
+    fun setOnTickListener(listener: (interval: Int) -> Unit) {
+        tickListener = listener
     }
 
 }
