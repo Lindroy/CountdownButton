@@ -12,20 +12,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btnSubmit.setOnClickListener {
-            btnSubmit.start()
-        }
-        btnSubmit.setFinishListener {
-            Toast.makeText(this, "倒计时结束", Toast.LENGTH_SHORT).show()
-        }
         btnSubmit.apply {
             setOnClickListener {
                 btnSubmit.start()
             }
-            setOnTickListener {
-                Log.e(TAG,"倒计时：$it")
+            setOnStartListener {
+                Log.d(TAG, "倒计时开始")
             }
-            setFinishListener {
+            setOnStopListener {
+                Log.d(TAG, "倒计时取消")
+            }
+            setOnTickListener {
+                Log.d(TAG, "倒计时：$it")
+            }
+            setOnFinishedListener {
+                Log.d(TAG, "倒计时结束")
                 Toast.makeText(this@MainActivity, "倒计时结束", Toast.LENGTH_SHORT).show()
             }
         }

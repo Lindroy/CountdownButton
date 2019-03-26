@@ -25,7 +25,7 @@ public class JavaActivity extends AppCompatActivity {
             }
         });
 
-        btnSubmit.setFinishListener(new Function0<Unit>() {
+        btnSubmit.setOnFinishedListener(new Function0<Unit>() {
             @Override
             public Unit invoke() {
                 return null;
