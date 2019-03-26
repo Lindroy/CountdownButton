@@ -35,7 +35,7 @@ class CountdownButton : AppCompatButton {
 
     private var startListener: (() -> Unit)? = null
 
-    private var stopListener: (() -> Unit)? = null
+    private var cancelListener: (() -> Unit)? = null
 
     private var countdownListener: OnCountdownListener? = null
 
@@ -63,12 +63,18 @@ class CountdownButton : AppCompatButton {
 
     }
 
+    /**
+     * 启动倒计时
+     */
     fun start() {
         isStarted = true
         updateCounting()
     }
 
-    fun stop() {
+    /**
+     * 启动倒计时
+     */
+    fun cancel() {
         isStarted = false
         updateCounting()
     }
@@ -119,7 +125,7 @@ class CountdownButton : AppCompatButton {
                 isEnabled = true
                 text = buttonText
                 countdownTimer?.cancel()
-                onStop()
+                onCancel()
             }
         }
         isTicking = isStarted
@@ -127,9 +133,9 @@ class CountdownButton : AppCompatButton {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        stop()
+        cancel()
         startListener = null
-        stopListener = null
+        cancelListener = null
         finishedListener = null
         tickListener = null
     }
@@ -139,9 +145,9 @@ class CountdownButton : AppCompatButton {
         countdownListener?.onStart()
     }
 
-    private fun onStop() {
-        stopListener?.invoke()
-        countdownListener?.onStop()
+    private fun onCancel() {
+        cancelListener?.invoke()
+        countdownListener?.onCancel()
     }
 
     private fun onTick(interval: Int) {
@@ -179,33 +185,70 @@ class CountdownButton : AppCompatButton {
     /**
      * 倒计时结束的监听
      */
-    fun setOnStopListener(listener: () -> Unit) {
-        stopListener = listener
+    fun setonCancelListener(listener: () -> Unit) {
+        cancelListener = listener
     }
 
+    /**
+     * 设置倒计时监听事件
+     */
     fun setOnCountdownListener(listener: OnCountdownListener) {
         countdownListener = listener
     }
 
+    /**
+     * 倒计时监听接口
+     */
     interface OnCountdownListener {
+        /**
+         * 倒计时开始
+         */
         fun onStart()
-        fun onStop()
+
+        /**
+         * 倒计时取消
+         */
+        fun onCancel()
+
+        /**
+         * 倒计时进行中
+         */
         fun onTick(interval: Int)
+
+        /**
+         * 倒计时结束
+         */
         fun onFinished()
     }
 
+    /**
+     * OnCountdownListener实现类，可用于添加单个监听事件
+     */
     open class SimpleOnCountdownListener : OnCountdownListener {
+        /**
+         * 倒计时开始
+         */
         override fun onStart() {
         }
 
-        override fun onStop() {
+        /**
+         * 倒计时取消
+         */
+        override fun onCancel() {
         }
 
+        /**
+         * 倒计时进行中
+         */
         override fun onTick(interval: Int) {
         }
 
+        /**
+         * 倒计时结束
+         */
         override fun onFinished() {
         }
+
 
     }
 

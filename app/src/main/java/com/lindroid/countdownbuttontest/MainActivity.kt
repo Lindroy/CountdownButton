@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "倒计时开始")
             }
 
-            override fun onStop() {
-                super.onStop()
+            override fun onCancel() {
+                super.onCancel()
                 Log.d(TAG, "倒计时取消")
             }
 
@@ -53,6 +53,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
         btnStart.setOnClickListener { btnSubmit.start() }
-        btnStop.setOnClickListener { btnSubmit.stop() }
+        btnStop.setOnClickListener { btnSubmit.cancel() }
     }
 }

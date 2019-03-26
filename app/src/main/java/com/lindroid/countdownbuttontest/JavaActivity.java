@@ -1,7 +1,7 @@
 package com.lindroid.countdownbuttontest;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.lindroid.countdownbutton.CountdownButton;
 
@@ -39,7 +39,7 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStop() {
+            public void onCancel() {
 
             }
 
