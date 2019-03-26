@@ -72,7 +72,7 @@ class CountdownButton : AppCompatButton {
     }
 
     /**
-     * 启动倒计时
+     * 取消倒计时
      */
     fun cancel() {
         isStarted = false
@@ -176,14 +176,14 @@ class CountdownButton : AppCompatButton {
     }
 
     /**
-     * 倒计时开始的监听
+     * 开始倒计时的监听
      */
     fun setOnStartListener(listener: () -> Unit) {
         startListener = listener
     }
 
     /**
-     * 倒计时结束的监听
+     * 取消倒计时的监听
      */
     fun setonCancelListener(listener: () -> Unit) {
         cancelListener = listener
@@ -248,8 +248,6 @@ class CountdownButton : AppCompatButton {
          */
         override fun onFinished() {
         }
-
-
     }
 
 }

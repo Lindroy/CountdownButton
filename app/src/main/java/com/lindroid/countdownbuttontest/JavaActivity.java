@@ -2,6 +2,7 @@ package com.lindroid.countdownbuttontest;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.lindroid.countdownbutton.CountdownButton;
 
@@ -16,7 +17,19 @@ public class JavaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java);
-        CountdownButton btnSubmit = findViewById(R.id.btnSubmit);
+        final CountdownButton btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSubmit.start();
+            }
+        });
+        btnSubmit.setOnFinishedListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                return null;
+            }
+        });
         btnSubmit.setOnTickListener(new Function1<Integer, Unit>() {
             @Override
             public Unit invoke(Integer interval) {
@@ -25,12 +38,6 @@ public class JavaActivity extends AppCompatActivity {
             }
         });
 
-        btnSubmit.setOnFinishedListener(new Function0<Unit>() {
-            @Override
-            public Unit invoke() {
-                return null;
-            }
-        });
 
         btnSubmit.setOnCountdownListener(new CountdownButton.OnCountdownListener() {
             @Override

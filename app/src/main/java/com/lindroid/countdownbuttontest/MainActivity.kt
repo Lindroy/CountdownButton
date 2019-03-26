@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
              setOnStartListener {
                  Log.d(TAG, "倒计时开始")
              }
-             setOnStopListener {
+             setonCancelListener {
                  Log.d(TAG, "倒计时取消")
              }
              setOnTickListener {
@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
                  Toast.makeText(this@MainActivity, "倒计时结束", Toast.LENGTH_SHORT).show()
              }
          }*/
-        btnSubmit.setOnClickListener { btnSubmit.start() }
         btnSubmit.setOnCountdownListener(object : CountdownButton.SimpleOnCountdownListener() {
             override fun onStart() {
                 super.onStart()
