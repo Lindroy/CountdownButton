@@ -29,5 +29,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "倒计时结束", Toast.LENGTH_SHORT).show()
             }
         }
+        btnStart.setOnClickListener { btnSubmit.start() }
+        btnStop.setOnClickListener { btnSubmit.stop() }
     }
 }

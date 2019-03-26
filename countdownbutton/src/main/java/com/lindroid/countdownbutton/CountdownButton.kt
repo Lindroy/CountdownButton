@@ -3,11 +3,8 @@ package com.lindroid.countdownbutton
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.CountDownTimer
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
-import android.view.Gravity
-import android.view.ViewGroup
 
 /**
  * @author Lin
@@ -38,29 +35,23 @@ class CountdownButton : AppCompatButton {
 
 
     constructor(context: Context?) : this(context, null)
-    constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, android.R.style.Widget_Button)
+    constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, android.R.attr.buttonStyle)
     @SuppressLint("Recycle")
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         val typedArray = context?.obtainStyledAttributes(
-            attrs,
-            R.styleable.CountdownButton,
-            defStyleAttr,
-            android.R.style.Widget_Button
+                attrs,
+                R.styleable.CountdownButton,
+                defStyleAttr,
+                0
         )
         typedArray?.let {
             countingText = it.getString(R.styleable.CountdownButton_countingText) ?: "%ss"
             finishText = it.getString(R.styleable.CountdownButton_finishedText)
-                ?: context.getString(R.string.user_captcha_send_again)
+                    ?: context.getString(R.string.user_captcha_send_again)
             millisInFuture = it.getInt(R.styleable.CountdownButton_millisInFuture, millisInFuture)
             countDownInterval = it.getInt(R.styleable.CountdownButton_countDownInterval, countDownInterval)
             it.recycle()
         }
-
-        gravity = Gravity.CENTER
-        isClickable = true
-        isFocusable = true
-        context?.let { background = ContextCompat.getDrawable(it, android.R.drawable.btn_default) }
-        layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
     fun start() {
@@ -84,8 +75,8 @@ class CountdownButton : AppCompatButton {
                 isEnabled = false
                 buttonText = text.toString()
                 countdownTimer = object : CountDownTimer(
-                    (millisInFuture - 1000).toLong(), //millisInFuture-1000是为了跳过0秒
-                    countDownInterval.toLong()
+                        (millisInFuture - 1000).toLong(), //millisInFuture-1000是为了跳过0秒
+                        countDownInterval.toLong()
                 ) {
                     /**
                      * Callback fired on regular interval.
@@ -110,7 +101,13 @@ class CountdownButton : AppCompatButton {
                     }
                 }.start()
             }
+            false -> {
+                isEnabled = true
+                text = buttonText
+                countdownTimer?.cancel()
+            }
         }
+        isCounting = isStarted
     }
 
     override fun onDetachedFromWindow() {
