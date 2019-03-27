@@ -7,19 +7,19 @@
 ### 在工程gradle中添加：
 
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    allprojects {
+        repositories {
+            ...
+            maven { url 'https://jitpack.io' }
+        }
+    }
 ```
 ### 添加以下依赖：
 
 ```
-	dependencies {
-	        implementation 'com.github.Lindroy:CountdownButton:vlatest-version'
-	}
+    dependencies {
+            implementation 'com.github.Lindroy:CountdownButton:vlatest-version'
+    }
 ```
 `latest-version`参见图标`jitpack`后面的版本号，注意不要漏掉前面的v。
 
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="发送验证码" />
 ```
-然后在代码中启动倒计时。
+然后在代码中启动倒计时：
 
 ```kotlin
         btnSubmit.setOnClickListener { btnSubmit.start() }
@@ -54,10 +54,14 @@
 | tickText | 倒计时进行中的按钮文字 | stringformat格式 | “%s” |
 | finishedText | 倒计时完成后的按钮文字  | string  | “重新发送” |
 
-### 方法：
+### 属性和方法：
 
 | 名称 | 作用 | 备注 |
 | ------------ | ------------ | :------------: |
+| millisInFuture | 获取或设置倒计时的总时间 | Java有相应的Getter或Setter方法 |
+| countDownInterval | 获取或设置倒计时的时间间隔 | 同上 |
+| tickText | 获取或设置倒计时进行中的按钮文字 | 同上 |
+| finishText | 获取或设置倒计时结束时的按钮文字 | 同上 |
 | start() | 启动倒计时 | / |
 | cancel() | 取消倒计时 | / |
 | setOnStartListener（） | 开始倒计时的监听 | Lambda形式  |
@@ -97,7 +101,7 @@
          }
 ```
 
-也可以使用`setOnCountdownListener()`，传入匿名内部类：
+或者使用`setOnCountdownListener()`，传入匿名内部类：
 
 ```kotlin
         btnSubmit.setOnCountdownListener(object : CountdownButton.SimpleOnCountdownListener() {
@@ -133,7 +137,7 @@
         btnSubmit.setOnFinishedListener(new Function0<Unit>() {
             @Override
             public Unit invoke() {
-				//倒计时结束监听
+                //倒计时结束监听
                 return null;
             }
         });
