@@ -43,7 +43,7 @@
 ```
 更多的方法和写法请参考后面的**属性和方法**和**监听事件的写法**两节。
 
-## 属性和方法
+## 布局属性和方法
 
 ### 布局属性：
 
@@ -53,6 +53,14 @@
 | countDownInterval | 倒计时的间隔 | integer | 1000 |
 | tickText | 倒计时进行中的按钮文字 | stringformat格式 | “%s” |
 | finishedText | 倒计时完成后的按钮文字  | string  | “重新发送” |
+
+`tickText`和`finishedText`也可以在字符资源文件中全局替换：
+
+```xml
+    <string name="countdown_button_finished_text">重新发送</string>
+    <string name="countdown_button_tick_text">%ss</string>
+```
+
 
 ### 属性和方法：
 
