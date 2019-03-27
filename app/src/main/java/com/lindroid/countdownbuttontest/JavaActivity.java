@@ -2,13 +2,9 @@ package com.lindroid.countdownbuttontest;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-
 import com.lindroid.countdownbutton.CountdownButton;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.functions.Function1;
 
 public class JavaActivity extends AppCompatActivity {
 
@@ -17,14 +13,14 @@ public class JavaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java);
-        final CountdownButton btnSubmit = findViewById(R.id.btnSubmit);
+        final CountdownButton btnSubmit = findViewById(R.id.btnSubmit2);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnSubmit.start();
             }
         });
-        btnSubmit.setOnFinishedListener(new Function0<Unit>() {
+       /* btnSubmit.setOnFinishedListener(new Function0<Unit>() {
             @Override
             public Unit invoke() {
                 return null;
@@ -36,7 +32,7 @@ public class JavaActivity extends AppCompatActivity {
 
                 return null;
             }
-        });
+        });*/
 
 
         btnSubmit.setOnCountdownListener(new CountdownButton.OnCountdownListener() {
@@ -47,7 +43,7 @@ public class JavaActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-
+                Log.e("Tag", "onCancel2");
             }
 
             @Override
@@ -61,10 +57,17 @@ public class JavaActivity extends AppCompatActivity {
             }
         });
 
-        btnSubmit.setOnCountdownListener(new CountdownButton.SimpleOnCountdownListener() {
+      /*  btnSubmit.setOnCountdownListener(new CountdownButton.SimpleOnCountdownListener() {
             @Override
             public void onFinished() {
                 super.onFinished();
+            }
+        });*/
+
+        findViewById(R.id.btnStop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSubmit.cancel();
             }
         });
     }

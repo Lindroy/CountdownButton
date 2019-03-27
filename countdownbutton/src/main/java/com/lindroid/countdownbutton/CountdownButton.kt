@@ -17,6 +17,10 @@ class CountdownButton : AppCompatButton {
     var millisInFuture = 60 * 1000
     /**倒计时的时间间隔**/
     var countDownInterval = 1 * 1000
+    /**倒计时进行中的按钮文字**/
+    var tickText = ""
+    /**倒计时结束时的按钮文字**/
+    var finishText = ""
     /**倒计时是否在进行**/
     private var isTicking = false
     /**倒计时是否要开始**/
@@ -24,10 +28,6 @@ class CountdownButton : AppCompatButton {
     private var countdownTimer: CountDownTimer? = null
     /**正常按钮文字**/
     private var buttonText = ""
-    /**倒计时按钮文字**/
-    var tickText = ""
-    /**倒计时结束时的按钮文字**/
-    var finishText = ""
 
     private var finishedListener: (() -> Unit)? = null
 
@@ -39,21 +39,22 @@ class CountdownButton : AppCompatButton {
 
     private var countdownListener: OnCountdownListener? = null
 
+
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, android.R.attr.buttonStyle)
     @SuppressLint("Recycle")
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         val typedArray = context?.obtainStyledAttributes(
-                attrs,
-                R.styleable.CountdownButton,
-                defStyleAttr,
-                0
+            attrs,
+            R.styleable.CountdownButton,
+            defStyleAttr,
+            0
         )
         typedArray?.let {
             tickText = it.getString(R.styleable.CountdownButton_tickText)
-                    ?: context.getString(R.string.countdown_button_tick_text)
+                ?: context.getString(R.string.countdown_button_tick_text)
             finishText = it.getString(R.styleable.CountdownButton_finishedText)
-                    ?: context.getString(R.string.countdown_button_finished_text)
+                ?: context.getString(R.string.countdown_button_finished_text)
             millisInFuture = it.getInt(R.styleable.CountdownButton_millisInFuture, millisInFuture)
             countDownInterval = it.getInt(R.styleable.CountdownButton_countDownInterval, countDownInterval)
             it.recycle()
@@ -90,8 +91,8 @@ class CountdownButton : AppCompatButton {
                 buttonText = text.toString()
                 if (countdownTimer == null) {
                     countdownTimer = object : CountDownTimer(
-                            (millisInFuture - 1000).toLong(), //millisInFuture-1000是为了跳过0秒
-                            countDownInterval.toLong()
+                        (millisInFuture - 1000).toLong(), //millisInFuture-1000是为了跳过0秒
+                        countDownInterval.toLong()
                     ) {
                         /**
                          * Callback fired on regular interval.
@@ -122,14 +123,15 @@ class CountdownButton : AppCompatButton {
             }
             //倒计时结束
             false -> {
+                countdownTimer?.cancel()
                 isEnabled = true
                 text = buttonText
-                countdownTimer?.cancel()
                 onCancel()
             }
         }
         isTicking = isStarted
     }
+
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
@@ -138,7 +140,9 @@ class CountdownButton : AppCompatButton {
         cancelListener = null
         finishedListener = null
         tickListener = null
+        countdownListener = null
     }
+
 
     private fun onStart() {
         startListener?.invoke()
@@ -187,6 +191,7 @@ class CountdownButton : AppCompatButton {
      */
     fun setonCancelListener(listener: () -> Unit) {
         cancelListener = listener
+
     }
 
     /**

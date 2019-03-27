@@ -1,9 +1,10 @@
 package com.lindroid.countdownbuttontest
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.lindroid.countdownbutton.CountdownButton
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 private val TAG = "CountDownTag"
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        /* btnSubmit.apply {
+        btnSubmit.apply {
              setOnClickListener {
                  btnSubmit.start()
              }
@@ -29,8 +30,8 @@ class MainActivity : AppCompatActivity() {
                  Log.d(TAG, "倒计时结束")
                  Toast.makeText(this@MainActivity, "倒计时结束", Toast.LENGTH_SHORT).show()
              }
-         }*/
-        btnSubmit.setOnCountdownListener(object : CountdownButton.SimpleOnCountdownListener() {
+        }
+        /*btnSubmit.setOnCountdownListener(object : CountdownButton.SimpleOnCountdownListener() {
             override fun onStart() {
                 super.onStart()
                 Log.d(TAG, "倒计时开始")
@@ -50,8 +51,12 @@ class MainActivity : AppCompatActivity() {
                 super.onFinished()
                 Log.d(TAG, "倒计时结束")
             }
-        })
+        })*/
         btnStart.setOnClickListener { btnSubmit.start() }
         btnStop.setOnClickListener { btnSubmit.cancel() }
+        btnJump.setOnClickListener {
+            startActivity(Intent(this, JavaActivity::class.java))
+        }
+
     }
 }
