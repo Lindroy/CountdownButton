@@ -1,7 +1,27 @@
 # CountdownButton
 使用Kotlin编写的倒计时按钮。
-## 配置
 
+[![](https://jitpack.io/v/Lindroy/CountdownButton.svg)](https://jitpack.io/#Lindroy/CountdownButton)
+
+## 配置
+### 在工程gradle中添加：
+
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+### 添加以下依赖：
+
+```
+	dependencies {
+	        implementation 'com.github.Lindroy:CountdownButton:vlatest-version'
+	}
+```
+`latest-version`参见图标`jitpack`后面的版本号，注意不要漏掉前面的v。
 
 ## 简单使用
 
