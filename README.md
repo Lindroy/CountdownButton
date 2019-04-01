@@ -27,7 +27,7 @@
 
 在布局中直接添加`CountdownButton`：
 ```xml
-    <com.lindroid.countdownbutton.CountdownButton
+    <com.lindroid.view.CountdownButton
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
