@@ -1,4 +1,4 @@
-package com.lindroid.countdownbutton
+package com.lindroid.view
 
 import android.annotation.SuppressLint
 import android.content.Context

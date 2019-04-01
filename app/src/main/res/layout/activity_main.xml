@@ -7,7 +7,7 @@
               android:orientation="vertical"
               tools:context=".MainActivity">
 
-    <com.lindroid.countdownbutton.CountdownButton
+    <com.lindroid.view.CountdownButton
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

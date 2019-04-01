@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import com.lindroid.countdownbutton.CountdownButton;
+import com.lindroid.view.CountdownButton;
 
 public class JavaActivity extends AppCompatActivity {
 
