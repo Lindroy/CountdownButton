@@ -1,4 +1,4 @@
-package com.lindroid.view
+package com.lindroid.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
